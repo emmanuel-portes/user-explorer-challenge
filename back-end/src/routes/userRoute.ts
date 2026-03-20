@@ -1,0 +1,84 @@
+import express from 'express';
+import { body } from 'express-validator';
+
+import { validate } from '../middleware/validation'
+
+import UserExplorerController from '../controllers/userController'; 
+import UserExplorerService from '../services/userService';
+import { EntityNotFound, UnprocessableEntity } from '../error/appError';
+
+const userExplorerService = new UserExplorerService();
+const userExplorerController = new UserExplorerController(userExplorerService);
+
+const router = express.Router({ mergeParams: true })
+
+router.get('/users', (req: any, res: any) => {
+
+    const { search, city, company } = req.query
+
+    if(search) {
+        const result = userExplorerController.getUserBySearch(search)
+        if (result.success === false) {
+            throw new EntityNotFound(result.message, 404)
+        }
+        return res.status(200).json(result.data)
+    }
+
+    if(city) {
+        const result = userExplorerController.getUserByCity(city)
+        if (result.success === false) {
+            throw new EntityNotFound(result.message, 404)
+        }
+        return res.status(200).json(result.data)
+    }
+
+    if(company) {
+        const result = userExplorerController.getUserByCompany(company)
+        if (result.success === false) {
+            throw new EntityNotFound(result.message, 404)
+        }
+        return res.status(200).json(result.data)
+    }
+    const users = userExplorerController.getUsers()
+    res.status(200).json(users)
+});
+
+router.get('/users/:id', (req: any, res: any) =>{
+    const { id } = req.params
+    const result = userExplorerController.getUsersById(id)
+    if (result.success === false) {
+        throw new EntityNotFound(result.message, 404)
+    }
+    res.status(200).json(result.data)
+});
+
+router.post('/users', [
+        body("name")
+            .notEmpty().withMessage("Name is required")
+            .trim()
+            .isLength({ min: 2, max: 50}).withMessage("Name must be between 2 and 50 characters"),
+        body("email")
+            .notEmpty().withMessage("Email is required")
+            .trim()
+            .isEmail().withMessage("Email provided in a wrong format"),
+        body("phone")
+            .notEmpty().withMessage("Phone is required")
+            .trim()
+            .isMobilePhone('es-DO').withMessage("Phone provided with a wrong format"),
+        body("company")
+            .notEmpty().withMessage("Company is required")
+            .trim()
+            .isLength({min: 3, max: 50}).withMessage("Company must be between 3 and 50 characters"),
+        body("city")
+            .notEmpty().withMessage("City is required")
+            .trim()
+            .isLength({min: 5, max: 50}).withMessage("City must be between 5 and 50 characters")
+    ], validate, (req: any, res: any) => {
+    const result = userExplorerController.saveUser(req.body)
+    if (!result.success) {
+        throw new UnprocessableEntity(result.message, 422, result.data)
+    }
+    res.status(201).json(result)
+});
+
+export default router
