@@ -21,7 +21,7 @@ router.get('/users', (req: any, res: any) => {
         if (result.success === false) {
             throw new EntityNotFound(result.message, 404)
         }
-        return res.status(200).json(result.data)
+        return res.status(200).json(result)
     }
 
     if(city) {
@@ -29,7 +29,7 @@ router.get('/users', (req: any, res: any) => {
         if (result.success === false) {
             throw new EntityNotFound(result.message, 404)
         }
-        return res.status(200).json(result.data)
+        return res.status(200).json(result)
     }
 
     if(company) {
@@ -37,7 +37,7 @@ router.get('/users', (req: any, res: any) => {
         if (result.success === false) {
             throw new EntityNotFound(result.message, 404)
         }
-        return res.status(200).json(result.data)
+        return res.status(200).json(result)
     }
     const users = userExplorerController.getUsers()
     res.status(200).json(users)

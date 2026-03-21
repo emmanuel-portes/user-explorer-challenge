@@ -21,11 +21,10 @@ export default class UserExplorerService {
     }
 
     getUserBySearch(search: string) {
-        const user = users.filter(user => user.name.toLowerCase().includes(search.toLowerCase()) 
-        || user.email.toLowerCase().includes(search.toLowerCase()) 
-        || user.phone.toLowerCase().includes(search.toLowerCase())
-        || user.company.toLowerCase().includes(search.toLowerCase())
-        || user.city.toLowerCase().includes(search.toLowerCase()))
+        const user = users.filter(
+            user => user.name.toLowerCase().includes(search.toLowerCase()) 
+            || user.email.toLowerCase().includes(search.toLowerCase()) 
+        )
 
         if (!user.length) {
             return { success: false, message: "Users not found" }
