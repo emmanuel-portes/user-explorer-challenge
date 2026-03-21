@@ -1,0 +1,17 @@
+services:
+  api-explorer-app:
+    build: 
+      context: ./back-end
+      dockerfile: backend.dockerfile 
+    ports:
+      - "3100:3100"
+    environment:
+      - NODE_ENV=prod
+      - PORT=3100
+  
+  ui-explorer-app:
+    build: 
+      context: ./front-end
+      dockerfile: frontend.dockerfile
+    ports:
+      - "5173:5173"

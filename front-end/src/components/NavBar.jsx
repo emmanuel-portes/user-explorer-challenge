@@ -6,7 +6,7 @@ export default function NavBar() {
             <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
                 <div className="text-xl font-semibold text-gray-800">
                     <Link to="/" className="flex items-center gap-2 group">
-                        <img src="../../public/search.svg" alt="Logo" className="w-8 h-8 object-contain"/>
+                        <img src="/search.svg" alt="Logo" className="w-8 h-8 object-contain"/>
                         <span className="text-xl font-semibold text-gray-800 group-hover:text-blue-600 transition-colors">
                             Explorer App
                         </span>

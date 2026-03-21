@@ -14,7 +14,7 @@ export default function Homepage() {
         const loadUsers = async () => {
             try {
                 const allUsers = await getUsers();
-                allUsers.success ? setUsers(allUsers.data): null
+                allUsers.success ? setUsers(allUsers.data): setUsers([])
             } catch(err){
                 console.error(err)
                 setError("Failed to load Users")
@@ -38,7 +38,7 @@ export default function Homepage() {
             setError(null)
         } catch(err){
             console.error(err)
-            setError("Failed to search Users.")
+            setError("Failed to search Users")
         } finally {
             setLoading(false)
         }
@@ -64,18 +64,31 @@ export default function Homepage() {
         </div>
 
         {
-            error && <div className="error-message"> {error} </div>
+            error && 
+            <div 
+            className="bg bg-red-200 border border-red-400 font-small rounded-lg max-w-6xl mx-auto px-4 py-6 gap-6"> 
+                <p>{error}</p>  
+            </div>
         }
 
         {
-            loading ? (<div clasName = "loading-message"> Loading...</div>)  
+            loading ? 
+                (<div className="bg bg-blue-200 border border-blue-400 font-small rounded-lg max-w-6xl mx-auto px-4 py-6 gap-6"> 
+                    <p>Loading... </p>
+                </div>)  
             : ( <div className="max-w-6xl mx-auto px-4 py-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                { users.length === 0 ? <p>No Users Found</p> : users.map(user =>(
+                { users.map(user =>(
                     <UserCard user={user} key={user.id}/>
-                ))
-                }
+                ))}
             </div> )
-         }
+        }
+
+        {
+            !loading && !error && users.length === 0 && 
+            <div className="bg bg-red-200 border border-red-400 font-small rounded-lg max-w-6xl mx-auto px-4 py-6 gap-6"> 
+                <p>No Users Found</p>
+            </div>  
+        }
     </div>
 )
 }

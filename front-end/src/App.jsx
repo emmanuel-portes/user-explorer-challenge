@@ -1,10 +1,6 @@
-import { useState } from 'react';
 
 import { Routes, Route } from 'react-router-dom';
 
-
-
-import UserCard from './components/UserCard';
 import NavBar from './components/NavBar';
 
 import Homepage from './pages/Home';
