@@ -5,10 +5,6 @@
 # User Explorer Challenge
 Fullstack application intended to list, search, filter and visualize details about users. The application consists of two parts, the **front-end** which is develop with JavaScript and ReactJS, and the **back-end** which is built in NodeJS and TypeScript. The purpose of this project is to present it as a proposal for the Fullstack developer vacancy.
 
-<p align="center">
-  <img width="1156" height="572" alt="image" src="https://github.com/user-attachments/assets/e21146e3-5c8a-44ac-95a2-6b9479414884" />
-</p>
-
 ## Project Structure
 
 ```bash
@@ -70,7 +66,7 @@ Fullstack application intended to list, search, filter and visualize details abo
 ## Getting Started
 There are ways to run the application. You can:
 1. Run the application locally
-2. Run the application locally using Docker
+2. Run the application locally using Docker (and Docker compose)
 
 ### Pre-requisites
 Before any configuration the project must be cloned:
@@ -84,17 +80,33 @@ After cloning the project, change directory into user-explorer-challenge and in 
 ```bash
   npm install 
 ```
+```bash
+  npm run build
+```
+```bash
+  npm run start 
+```
+Change directory into user-explorer-challenge and in the **front-end** directory execute to install the dependencies:
+```bash
+  npm install 
+```
+```bash
+  npm run start 
+```
+#### Run the application locally using Docker
 
+After cloning the project, change directory into user-explorer-challenge and execute:
 ```bash
-  npm install 
+  docker compose up
 ```
-```bash
-  npm install 
-```
-```bash
-  npm install 
-```
-```bash
-  npm install 
-```
-#### Run the application locally using Docker**
+Either way each service should be running on http://localhost:3100/api/v1.0/users/ and http://localhost:5173/ respectively.
+
+## Screenshots
+
+<p align="center">
+  <img width="1156" height="572" alt="image" src="https://github.com/user-attachments/assets/e21146e3-5c8a-44ac-95a2-6b9479414884" />
+</p>
+
+<p align="center">
+  <img width="1195" height="782" alt="image" src="https://github.com/user-attachments/assets/70d92fe0-0481-4a33-ba93-e300de96603f" />
+</p>
