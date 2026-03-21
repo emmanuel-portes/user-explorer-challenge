@@ -67,4 +67,34 @@ Fullstack application intended to list, search, filter and visualize details abo
 │   └── vite.config.js
 └── README.md
 ```
-## Setup
+## Getting Started
+There are ways to run the application. You can:
+1. Run the application locally
+2. Run the application locally using Docker
+
+### Pre-requisites
+Before any configuration the project must be cloned:
+
+```git
+git clone https://github.com/emmanuel-portes/user-explorer-challenge.git
+```
+### Installation
+#### Run the application locally
+After cloning the project, change directory into user-explorer-challenge and in the **back-end** directory execute to install the dependencies:
+```bash
+  npm install 
+```
+
+```bash
+  npm install 
+```
+```bash
+  npm install 
+```
+```bash
+  npm install 
+```
+```bash
+  npm install 
+```
+#### Run the application locally using Docker**
