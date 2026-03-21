@@ -101,12 +101,25 @@ After cloning the project, change directory into user-explorer-challenge and exe
 ```
 Either way each service should be running on http://localhost:3100/api/v1.0/users/ and http://localhost:5173/ respectively.
 
+### Usage
+In the specific case that the API is needed to request indenpendently. The request can be made as:
+```bash
+  curl -X GET http://localhost:3100/api/v1.0/users
+```
+```bash
+  curl -X POST http://localhost:3100/api/v1.0/users
+    \ -H "Content-Type: application/json"
+    \ -d '{
+      "name": "Lucía Fernández", "phone": "+18295473912", "city": "Santiago de los Caballeros",
+      "company": "CaribeTech Solutions", "email": "lucia.fernandez@caribetech.com"
+      }'
+```
 ## Screenshots
 
 <p align="center">
   <img width="1156" height="572" alt="image" src="https://github.com/user-attachments/assets/e21146e3-5c8a-44ac-95a2-6b9479414884" />
 </p>
-
+<br>
 <p align="center">
   <img width="1195" height="782" alt="image" src="https://github.com/user-attachments/assets/70d92fe0-0481-4a33-ba93-e300de96603f" />
 </p>
