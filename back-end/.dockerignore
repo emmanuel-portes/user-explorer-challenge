@@ -1,0 +1,15 @@
+
+*.d.ts
+*.d.ts.map
+.tsbuildinfo
+tsconfig.*.json
+tsconfig.*.tsbuildinfo
+
+**/.tsc-tmp/
+**/.tsc-working/
+**/lib/
+
+node_modules
+npm-debug.log
+dist
+.env

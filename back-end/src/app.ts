@@ -11,7 +11,7 @@ const app = express()
 app.use(morgan('short'))
 app.use(express.json())
 app.use(cors({
-    origin: "http://localhost:3200",
+    origin: "http://0.0.0.0:5173",
     methods: ['GET', 'POST'],
     credentials: false
 }))
