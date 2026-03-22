@@ -66,14 +66,14 @@ export default function Homepage() {
         {
             error && 
             <div className="bg bg-red-200 border border-red-400 font-small  max-w-6xl mx-auto px-4 py-6 gap-6"> 
-                <p>{error}</p>  
+                <p className=" text-red-800 pt-1" >{error}</p>  
             </div>
         }
 
         {
             loading ? 
                 (<div className="bg bg-blue-200 border border-blue-400 font-small  max-w-6xl mx-auto px-4 py-6 gap-6"> 
-                    <p>Loading... </p>
+                    <p className=" text-blue-800 pt-1">Loading... </p>
                 </div>)  
             : ( <div className="max-w-6xl mx-auto px-4 py-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 { users.map(user =>(
@@ -84,8 +84,8 @@ export default function Homepage() {
 
         {
             !loading && !error && users.length === 0 && 
-            ( <div className="bg bg-red-200 border border-red-400 font-small  max-w-6xl mx-auto px-4 py-6 gap-6"> 
-                <p>No Users Found</p>
+            ( <div className="bg bg-green-200 border borde-green-400 font-small  max-w-6xl mx-auto px-4 py-6 gap-6"> 
+                <p className=" text-green-800 pt-1">No Users Found</p>
             </div> )
         }
     </div>

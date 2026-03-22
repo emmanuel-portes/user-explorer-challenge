@@ -1,5 +1,4 @@
 import { useForm } from 'react-hook-form';
-import { useFormStatus } from 'react-dom';
 import { saveUser } from "../services/api";
 import { useState } from 'react';
 
@@ -14,8 +13,6 @@ export default function Formpage() {
         handleSubmit
     } = useForm()
 
-    const { pending } = useFormStatus()
-
     async function onSubmit(formData) {
         console.log(formData)
         try {
@@ -26,8 +23,8 @@ export default function Formpage() {
             console.log(response)
         } catch(err) {
             setError(err)
-            setOperationSuccess(response.success)
-            setOperationMessage(response.message)
+            setOperationSuccess(false)
+            setOperationMessage("Failed to submit User")
             console.error(error)
         }
 
@@ -35,7 +32,7 @@ export default function Formpage() {
 
     return (
         <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-            <div className="w-full max-w-xl bg-white border border-gray-200 shadow-sm p-6">
+            <div className="w-full max-w-xl bg-white border border-gray-200 shadow-sm p-6 grid grid-cols-1">
                 <h2 className="text-2xl font-semibold text-gray-800 mb-6"> Save Users </h2>
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
                     <div>
@@ -67,8 +64,8 @@ export default function Formpage() {
                         <input
                             type="text"
                             placeholder="emmanuel.portes@example.com"
-                            className="w-full px-3 py-2 border border-gray-300 text-sm f
-                            ocus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full px-3 py-2 border border-gray-300 text-sm focus:outline-none 
+                            focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                             {...register("email", { 
                                 required: {
                                     value: true,
@@ -158,29 +155,28 @@ export default function Formpage() {
 
                     <div className="pt-2">
                         <button
-                            disabled={pending || !isValid || isSubmitting }
+                            disabled={!isValid || isSubmitting }
                             type="submit"
                             className="w-full bg-blue-600 text-white py-2.5 font-medium hover:bg-blue-700 transition-colors shadow-sm"
-                        > {pending ? "Submitting..." : "Submit"} 
+                        > {isSubmitting ? "Submitting..." : "Submit"} 
                         </button>
                     </div>
-
                 </form>
+            {
+                !error && operationSuccess &&
+                    ( <div className='py-2 m-2 w-full bg-green-100 border border-green-400 p-6 mx-auto'>
+                        <p className="text-green-800 pt-1 pb-1">{operationMessage}</p>
+                </div>)
+            }
 
-                {
-                    !error && operationSuccess &&
-                    ( <div >
-                        <p className="text-green-500 pt-3 text-md">{operationMessage}</p>
-                    </div>)
-                }
-
-                {
-                    error && !operationSuccess && 
-                    (<div>
-                        <p className="text-red-500 pt-3">{operationMessage}</p>
-                    </div>)
-                }
+            {
+                error && !operationSuccess && 
+                (<div className='py-2 m-2 w-full bg-red-200 border border-red-400 p-6 mx-auto'>
+                    <p className=" text-red-800 pt-1 pb-1">{operationMessage}</p>
+                </div>)
+            }
             </div>
+
         </div>
     );
 }
