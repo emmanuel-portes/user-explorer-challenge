@@ -123,11 +123,3 @@ In the specific case that the API is needed to request indenpendently. The reque
 <p align="center">
   <img width="1195" height="782" alt="image" src="https://github.com/user-attachments/assets/70d92fe0-0481-4a33-ba93-e300de96603f" />
 </p>
-
-After cloning the project, change directory into user-explorer-challenge and execute:
-```bash
-  docker compose up
-```
-Now each service should be running on http://localhost:3100/api/v1.0/users/ and http://localhost:5173/ respectively.
-
-#### 
