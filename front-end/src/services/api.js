@@ -29,3 +29,16 @@ export const getUsersByCompany = async (company) => {
     const result = await response.json()
     return result
 }
+
+export const saveUser = async (data) => {
+    const response = await fetch(`${BASE_URL}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        mode: 'cors',
+        body: JSON.stringify(data)
+    })
+    const result = await response.json()
+    return result
+}

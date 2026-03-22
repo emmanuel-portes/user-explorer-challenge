@@ -1,41 +1,111 @@
+import { useForm } from 'react-hook-form';
+import { useFormStatus } from 'react-dom';
+import { saveUser } from "../services/api";
+import { useState } from 'react';
 
 export default function Formpage() {
+    const [error, setError] = useState('');
+    const [operationSuccess, setOperationSuccess] = useState(false)
+    const [operationMessage, setOperationMessage] = useState(null)
+
+    const { 
+        register,
+        formState: {errors, isValid, isSubmitting}, 
+        handleSubmit
+    } = useForm()
+
+    const { pending } = useFormStatus()
+
+    async function onSubmit(formData) {
+        console.log(formData)
+        try {
+            const response = await saveUser(formData);
+            setOperationSuccess(response.success)
+            setOperationMessage(response.message)
+            setError(null)
+            console.log(response)
+        } catch(err) {
+            setError(err)
+            setOperationSuccess(response.success)
+            setOperationMessage(response.message)
+            console.error(error)
+        }
+
+    }
+
     return (
         <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-            <div className="w-full max-w-xl bg-white border border-gray-200 rounded-xl shadow-sm p-6">
+            <div className="w-full max-w-xl bg-white border border-gray-200 shadow-sm p-6">
                 <h2 className="text-2xl font-semibold text-gray-800 mb-6"> Save Users </h2>
-                <form className="space-y-5">
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
                     <div>
                         <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1"> Name </label>
                         <input
                             type="text"
-                            id="name"
-                            name="name"
                             placeholder="Emmanuel Portes"
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full 
+                            px-3 py-2 border border-gray-300 text-sm 
+                            focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            {...register("name", { 
+                                required: {
+                                    value: true,
+                                    message: "Name field is required",
+                            }, pattern: { 
+                                    value: /^[a-zA-Z\s]{3,50}$/, 
+                                    message: "Name provided in wrong format"
+                                } 
+                            })}
                         />
+                        {
+                            errors.name && <p className='text-red-500 pt-1 text-sm'>{errors.name?.message}</p>
+                        }
+
                     </div>
 
                     <div>
                         <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1"> Email </label>
                         <input
-                            type="email"
-                            id="email"
-                            name="email"
+                            type="text"
                             placeholder="emmanuel.portes@example.com"
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full px-3 py-2 border border-gray-300 text-sm f
+                            ocus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            {...register("email", { 
+                                required: {
+                                    value: true,
+                                    message: "Email field is required",
+                            }, pattern: { 
+                                    value: /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,}$/gm, 
+                                    message: "Email provided in wrong format"
+                                }
+                            })}
                         />
+                        {
+                            errors.email && <p className='text-red-500 pt-1 text-sm'>{errors.email?.message}</p>
+                        }
                     </div>
 
                     <div>
                         <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1"> Phone </label>
                         <input
                             type="tel"
-                            id="phone"
-                            name="phone"
-                            placeholder="+18090000000"
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="809-000-0000"
+                            className="w-full px-3 py-2 border border-gray-300
+                            text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            {...register("phone", { 
+                                required: {
+                                    value: true,
+                                    message: "Phone field is required",
+                            }, 
+                                maxLength: 10, 
+                                pattern: { 
+                                    value: /[0-9]{3}[0-9]{3}[0-9]{4}/gm, 
+                                    message: "Phone provided in wrong format"
+                                }
+                            })}
                         />
+                        {
+                            errors.phone && <p className='text-red-500 pt-1 text-sm'>{errors.phone?.message}</p>
+                        }
                     </div>
 
                     <div>
@@ -45,8 +115,21 @@ export default function Formpage() {
                             id="company"
                             name="company"
                             placeholder="XYZ SRL"
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full px-3 py-2 border border-gray-300 text-sm focus:outline-none 
+                            focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            {...register("company", { 
+                                required: {
+                                    value: true,
+                                    message: "Company field is required",
+                            }, pattern: { 
+                                    value: /^[a-zA-Z\s]{3,50}$/, 
+                                    message: "Company provided in wrong format"
+                                }
+                            })}
                         />
+                        {
+                            errors.company && <p className='text-red-500 pt-1 text-sm'>{errors.company?.message}</p>
+                        }
                     </div>
 
                     <div>
@@ -56,19 +139,47 @@ export default function Formpage() {
                             id="city"
                             name="city"
                             placeholder="Santo Domingo"
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full px-3 py-2 border border-gray-300 text-sm focus:outline-none 
+                            focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            {...register("city", { 
+                                required: {
+                                    value: true,
+                                    message: "city field is required",
+                            }, pattern: { 
+                                    value: /^[a-zA-Z\s]{3,50}$/, 
+                                    message: "City provided in wrong format"
+                                }
+                            })}
                         />
+                        {
+                            errors.city && <p className='text-red-500 pt-1 text-sm'>{errors.city?.message}</p>
+                        }
                     </div>
 
                     <div className="pt-2">
                         <button
+                            disabled={pending || !isValid || isSubmitting }
                             type="submit"
-                            className="w-full bg-blue-600 text-white py-2.5 rounded-lg font-medium hover:bg-blue-700 transition-colors shadow-sm"
-                        > Save 
+                            className="w-full bg-blue-600 text-white py-2.5 font-medium hover:bg-blue-700 transition-colors shadow-sm"
+                        > {pending ? "Submitting..." : "Submit"} 
                         </button>
                     </div>
 
                 </form>
+
+                {
+                    !error && operationSuccess &&
+                    ( <div >
+                        <p className="text-green-500 pt-3 text-md">{operationMessage}</p>
+                    </div>)
+                }
+
+                {
+                    error && !operationSuccess && 
+                    (<div>
+                        <p className="text-red-500 pt-3">{operationMessage}</p>
+                    </div>)
+                }
             </div>
         </div>
     );

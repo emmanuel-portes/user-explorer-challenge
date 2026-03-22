@@ -17,7 +17,7 @@ export default function NavBar() {
                         Home
                     </Link>
 
-                    <Link to="/save" className="px-4 py-2 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors shadow-sm">
+                    <Link to="/save" className="px-4 py-2  bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors shadow-sm">
                         Insert
                     </Link>
                 </div>

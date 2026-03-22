@@ -1,7 +1,7 @@
 
 function UserCard({ user }) {
     return (
-        <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-5 
+        <div className="bg-white border border-gray-200 shadow-sm p-5 
                        hover:shadow-md cursor-pointer">
             <h3 className="text-lg font-semibold text-gray-800 mb-1">{user.name}</h3>
             <p className="text-sm text-gray-500">{user.email}</p>

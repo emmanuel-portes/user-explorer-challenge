@@ -70,7 +70,7 @@ Fullstack application intended to list, search, filter and visualize details abo
 ## Getting Started
 There are ways to run the application. You can:
 1. Run the application locally
-2. Run the application locally using Docker
+2. Run the application locally using Docker (and Docker compose)
 
 ### Pre-requisites
 Before any configuration the project must be cloned:
@@ -84,17 +84,27 @@ After cloning the project, change directory into user-explorer-challenge and in 
 ```bash
   npm install 
 ```
+```bash
+  npm run build
+```
+```bash
+  npm run start 
+```
+Change directory into user-explorer-challenge and in the **front-end** directory execute to install the dependencies:
+```bash
+  npm install 
+```
+```bash
+  npm run start 
+```
+Now each service should be running on http://localhost:3100/api/v1.0/users/ and http://localhost:5173/ respectively.
 
-```bash
-  npm install 
-```
-```bash
-  npm install 
-```
-```bash
-  npm install 
-```
-```bash
-  npm install 
-```
 #### Run the application locally using Docker**
+
+After cloning the project, change directory into user-explorer-challenge and execute:
+```bash
+  docker compose up
+```
+Now each service should be running on http://localhost:3100/api/v1.0/users/ and http://localhost:5173/ respectively.
+
+#### 

@@ -52,28 +52,27 @@ export default function Homepage() {
             <input 
                 type="text" 
                 placeholder="Search by name or email" 
-                className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-sm
+                className="flex-1 px-4 py-2 border border-gray-300  text-sm
                     focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
                     placeholder-gray-400"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <button type="submit" className="px-5 py-2 bg-blue-600 text-white rounded-lg font-medium
+            <button type="submit" className="px-5 py-2 bg-blue-600 text-white  font-medium
                     hover:bg-blue-700 transition-colors shadow-sm"> Search </button>
         </form>
         </div>
 
         {
             error && 
-            <div 
-            className="bg bg-red-200 border border-red-400 font-small rounded-lg max-w-6xl mx-auto px-4 py-6 gap-6"> 
+            <div className="bg bg-red-200 border border-red-400 font-small  max-w-6xl mx-auto px-4 py-6 gap-6"> 
                 <p>{error}</p>  
             </div>
         }
 
         {
             loading ? 
-                (<div className="bg bg-blue-200 border border-blue-400 font-small rounded-lg max-w-6xl mx-auto px-4 py-6 gap-6"> 
+                (<div className="bg bg-blue-200 border border-blue-400 font-small  max-w-6xl mx-auto px-4 py-6 gap-6"> 
                     <p>Loading... </p>
                 </div>)  
             : ( <div className="max-w-6xl mx-auto px-4 py-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -85,9 +84,9 @@ export default function Homepage() {
 
         {
             !loading && !error && users.length === 0 && 
-            <div className="bg bg-red-200 border border-red-400 font-small rounded-lg max-w-6xl mx-auto px-4 py-6 gap-6"> 
+            ( <div className="bg bg-red-200 border border-red-400 font-small  max-w-6xl mx-auto px-4 py-6 gap-6"> 
                 <p>No Users Found</p>
-            </div>  
+            </div> )
         }
     </div>
 )
