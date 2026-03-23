@@ -125,5 +125,6 @@ In the specific case that the API is needed to request indenpendently. The reque
 <br>
 
 ## Next Steps
-- Modify behavior of Save Users form, so fields are resetted after a successfull submit. Also Color them in case of an error.
-- Consider a better project structure
+- Modify behavior of Save Users form, so fields are resetted after a successfull submit. 
+- Change Color of Save Users form in case of an error.
+- Consider a better project structure.
