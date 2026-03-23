@@ -1,31 +1,18 @@
 const BASE_URL = "http://localhost:3100/api/v1.0/users"
 
-export const getUsers = async () => {
-    const response = await fetch(BASE_URL)
+export const getUsers = async (querySearch) => {
+    const params = new URLSearchParams()
+    if (querySearch.query) params.append("query", querySearch.query)
+    if (querySearch.city) params.append("city", querySearch.city) 
+    if (querySearch.company) params.append("company", querySearch.company)
+
+    const response = await fetch(`${BASE_URL}?${params.toString()}`)
     const result = await response.json()
     return result
 }
 
 export const getUsersById = async (id) => {
     const response = await fetch(`${BASE_URL}/${id}`)
-    const result = await response.json()
-    return result
-}
-
-export const getUsersBySearchCriteria = async (query) => {
-    const response = await fetch(`${BASE_URL}/?search=${encodeURIComponent(query)}`)
-    const result = await response.json()
-    return result
-}
-
-export const getUsersByCity = async (city) => {
-    const response = await fetch(`${BASE_URL}/?search=${encodeURIComponent(city)}`)
-    const result = await response.json()
-    return result
-}
-
-export const getUsersByCompany = async (company) => {
-    const response = await fetch(`${BASE_URL}/?search=${encodeURIComponent(company)}`)
     const result = await response.json()
     return result
 }

@@ -1,9 +1,11 @@
 
-import { userDTO, User } from "../domain/user";
+import { userDTO, User, searchCriteria } from "../domain/user";
 import users from "../data/data";
 
 export default class UserExplorerService {
-    constructor(){}
+    constructor() {
+
+    }
 
     getUsers() {
         if (!users.length) {
@@ -20,32 +22,35 @@ export default class UserExplorerService {
         return { success: true, data: user }
     }
 
-    getUserBySearch(search: string) {
-        const user = users.filter(
-            user => user.name.toLowerCase().includes(search.toLowerCase()) 
-            || user.email.toLowerCase().includes(search.toLowerCase()) 
-        )
+    getUserBySearch(searchQuery: searchCriteria) {
+        const query = searchQuery.query?.toLowerCase()
+        const cityFilter = searchQuery.city?.toLowerCase()
+        const companyFilter = searchQuery.company?.toLowerCase()
 
+        const user = users.filter((user) => {
+            const name = user.name.toLowerCase()
+            const email = user.email.toLowerCase()
+            const city = user.city.toLowerCase()
+            const company = user.company.toLowerCase()
+
+            if (query && !(name.includes(query) || email.includes(query))) {
+                return false
+            }
+
+            if (cityFilter && !city.includes(cityFilter)) {
+                return false
+            }
+
+            if (companyFilter && !company.includes(companyFilter)) {
+                return false
+            }
+            return true
+        }) 
+        
         if (!user.length) {
             return { success: false, message: "Users not found" }
         }
-        return {sucess: true, data: user}
-    }
-
-    getUserByCity(city: string) {
-        const user = users.filter(user => user.city.toLowerCase() === city.toLowerCase())
-        if (!user.length) {
-            return { success: false, message: `Users not found with given city: ${city}`}
-        }
-        return { success: true, data: user }
-    }
-
-    getUserByCompany(company: string) {
-        const user = users.filter(user => user.company.toLowerCase() === company.toLowerCase())
-        if (!user.length) {
-            return { success: false, message: `Users not found with given company: ${company}`}
-        }
-        return { success: true, data: user }
+        return {success: true, data: user}
     }
 
     saveUser(user: userDTO) {

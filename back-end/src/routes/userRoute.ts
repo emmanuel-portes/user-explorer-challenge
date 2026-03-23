@@ -13,34 +13,17 @@ const userExplorerController = new UserExplorerController(userExplorerService);
 const router = express.Router({ mergeParams: true })
 
 router.get('/users', (req: any, res: any) => {
-
-    const { search, city, company } = req.query
-
-    if(search) {
-        const result = userExplorerController.getUserBySearch(search)
-        if (result.success === false) {
-            throw new EntityNotFound(result.message, 404)
-        }
-        return res.status(200).json(result)
-    }
-
-    if(city) {
-        const result = userExplorerController.getUserByCity(city)
-        if (result.success === false) {
-            throw new EntityNotFound(result.message, 404)
-        }
-        return res.status(200).json(result)
-    }
-
-    if(company) {
-        const result = userExplorerController.getUserByCompany(company)
+    if (req.query != undefined){
+        const queryCriteria = req.query
+        const result = userExplorerController.getUserBySearch(queryCriteria)
         if (result.success === false) {
             throw new EntityNotFound(result.message, 404)
         }
         return res.status(200).json(result)
     }
     const users = userExplorerController.getUsers()
-    res.status(200).json(users)
+    return res.status(200).json(users)
+
 });
 
 router.get('/users/:id', (req: any, res: any) =>{
@@ -49,7 +32,7 @@ router.get('/users/:id', (req: any, res: any) =>{
     if (result.success === false) {
         throw new EntityNotFound(result.message, 404)
     }
-    res.status(200).json(result.data)
+    return res.status(200).json(result.data)
 });
 
 router.post('/users', [
@@ -78,7 +61,7 @@ router.post('/users', [
     if (!result.success) {
         throw new UnprocessableEntity(result.message, 422, result.data)
     }
-    res.status(201).json(result)
+    return res.status(201).json(result)
 });
 
 export default router

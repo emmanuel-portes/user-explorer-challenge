@@ -1,5 +1,5 @@
 import UserExplorerService from '../services/userService'
-import { userDTO, User } from '../domain/user'
+import { userDTO, searchCriteria } from '../domain/user'
 
 export default class UserExplorerController {
 
@@ -17,16 +17,18 @@ export default class UserExplorerController {
         return this._userExplorerService.getUsersById(id)
     }
 
-    getUserBySearch(search: string) {
-        return this._userExplorerService.getUserBySearch(search)
-    }
+    getUserBySearch(queryFilter: searchCriteria) {
+        const query = queryFilter.query
+        const city = queryFilter.city
+        const company = queryFilter.company
 
-    getUserByCity(city: string) {
-        return this._userExplorerService.getUserByCity(city)
-    }
-
-    getUserByCompany(company: string){
-        return this._userExplorerService.getUserByCompany(company)
+        const filters = {
+            query: query?.toString().trim() || undefined,
+            city: city?.toString().trim() || undefined,
+            company: company?.toString().trim() || undefined
+        }
+        
+        return this._userExplorerService.getUserBySearch(filters)
     }
 
     saveUser(user: userDTO) {
