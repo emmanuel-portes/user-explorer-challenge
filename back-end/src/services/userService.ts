@@ -7,53 +7,46 @@ export default class UserExplorerService {
 
     }
 
-    getUsers() {
+    public getUsers() {
         if (!users.length) {
-            return { success: false, data: users, message: "Users not available" }
+            return { success: false, data: users, message: "Users not available" };
         }
-        return { success: true, data: users }
+        return { success: true, data: users };
     }
 
-    getUsersById(id: string) {
-        const user = users.find(user => user.id === parseInt(id))
+    public getUsersById(id: string) {
+        const user = users.find(user => user.id === parseInt(id));
         if (!user) {
-            return {success: false, message: `User not found with provided id: ${id}`}
+            return { success: false, message: `User not found with provided id: ${id}` };
         }
-        return { success: true, data: user }
+        return { success: true, data: user };
     }
 
-    getUserBySearch(searchQuery: searchCriteria) {
-        const query = searchQuery.query?.toLowerCase()
-        const cityFilter = searchQuery.city?.toLowerCase()
-        const companyFilter = searchQuery.company?.toLowerCase()
+    public getUserBySearch(searchQuery: searchCriteria) {
+        const query = searchQuery.query?.toLowerCase();
+        const cityFilter = searchQuery.city?.toLowerCase();
+        const companyFilter = searchQuery.company?.toLowerCase();
 
         const user = users.filter((user) => {
-            const name = user.name.toLowerCase()
-            const email = user.email.toLowerCase()
-            const city = user.city.toLowerCase()
-            const company = user.company.toLowerCase()
+            const name = user.name.toLowerCase();
+            const email = user.email.toLowerCase();
+            const city = user.city.toLowerCase();
+            const company = user.company.toLowerCase();
 
-            if (query && !(name.includes(query) || email.includes(query))) {
-                return false
-            }
+            this.includesQuerySearch(query, name, email);
+            this.includesCitySearch(cityFilter, city);
+            this. includesCompanySearch(companyFilter, company);
 
-            if (cityFilter && !city.includes(cityFilter)) {
-                return false
-            }
-
-            if (companyFilter && !company.includes(companyFilter)) {
-                return false
-            }
-            return true
+            return true; 
         }) 
         
         if (!user.length) {
-            return { success: false, message: "Users not found" }
+            return { success: false, message: "Users not found" };
         }
-        return {success: true, data: user}
+        return { success: true, data: user };
     }
 
-    saveUser(user: userDTO) {
+    public saveUser(user: userDTO) {
         const newUser: User = {
             id: users.length + 1,
             name: user.name,
@@ -63,14 +56,32 @@ export default class UserExplorerService {
             city: user.city
         }
 
-        const userExists = users.findIndex(user => user.email === newUser.email || user.phone === newUser.phone)
+        const userExists = users.findIndex(user => user.email === newUser.email || user.phone === newUser.phone);
         
         if (userExists === -1) {
-            users.push(newUser)
-            return {success: true, data: { id: newUser.id }, message: `User ${newUser.email} successfully added` }
+            users.push(newUser);
+            return { success: true, data: { id: newUser.id }, message: `User ${newUser.email} successfully added` };
         }
-        return {success: false, data: user, message: 'User provided already exists'}
+        return { success: false, data: user, message: 'User provided already exists' };
 
+    }
+
+    private includesQuerySearch(query: string | undefined, name: string, email: string) : boolean | void {
+        if (query && !(name.includes(query) || email.includes(query))) {
+            return false;
+        }
+    }
+
+    private includesCitySearch(cityFilter: string | undefined, city: string) : boolean | void {
+        if (cityFilter && !city.includes(cityFilter)){
+            return false;
+        }
+    }
+
+    private includesCompanySearch(companyFilter: string | undefined, company: string) : boolean | void {
+        if (companyFilter && !company.includes(companyFilter)) {
+            return false;
+        }
     }
 }
 

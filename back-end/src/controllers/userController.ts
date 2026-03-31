@@ -18,14 +18,10 @@ export default class UserExplorerController {
     }
 
     getUserBySearch(queryFilter: searchCriteria) {
-        const query = queryFilter.query
-        const city = queryFilter.city
-        const company = queryFilter.company
-
         const filters = {
-            query: query?.toString().trim() || undefined,
-            city: city?.toString().trim() || undefined,
-            company: company?.toString().trim() || undefined
+            query: queryFilter.query?.toString().trim(),
+            city: queryFilter.city?.toString().trim(),
+            company: queryFilter.company?.toString().trim() 
         }
         
         return this._userExplorerService.getUserBySearch(filters)
