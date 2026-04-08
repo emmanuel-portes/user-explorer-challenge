@@ -8,9 +8,9 @@ interface User {
 }
 
 interface searchCriteria {
-    query?: string | undefined
-    city?: string | undefined
-    company: string | undefined
+    query?: string 
+    city?: string 
+    company?: string 
 }
 
 type userDTO = Omit<User, 'id'>

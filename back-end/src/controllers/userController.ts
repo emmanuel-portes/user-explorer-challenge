@@ -1,33 +1,34 @@
-import UserExplorerService from '../services/userService'
-import { userDTO, searchCriteria } from '../domain/user'
+import { Request, Response } from 'express';
+
+import UserExplorerService from '../services/userService';
+import { userDTO, searchCriteria } from '../domain/user';
+
+import { EntityNotFound } from '../error/appError';
 
 export default class UserExplorerController {
 
-    private _userExplorerService: UserExplorerService
+    private _userExplorerService: UserExplorerService;
 
     constructor(userExplorerService: UserExplorerService) {
-        this._userExplorerService = userExplorerService
+        this._userExplorerService = userExplorerService;
     }
 
-    getUsers() {
-        return this._userExplorerService.getUsers()
+    public getUsers(req: Request, res: Response) {
+        if (req.query != undefined) {
+            const queryCriteria: searchCriteria = req.query;
+            const result = this._userExplorerService.getUserBySearch(queryCriteria);
+            if (!result.success) throw new EntityNotFound(result.message, 404);
+            return res.status(200).json(result);
+        }
+        const users = this._userExplorerService.getUsers();
+        return res.status(200).json(users);
     }
 
-    getUsersById(id: string) {
+    public getUsersById(id: string) {
         return this._userExplorerService.getUsersById(id)
     }
 
-    getUserBySearch(queryFilter: searchCriteria) {
-        const filters = {
-            query: queryFilter.query?.toString().trim(),
-            city: queryFilter.city?.toString().trim(),
-            company: queryFilter.company?.toString().trim() 
-        }
-        
-        return this._userExplorerService.getUserBySearch(filters)
-    }
-
-    saveUser(user: userDTO) {
+    public saveUser(user: userDTO) {
         return this._userExplorerService.saveUser(user)
     }
 }

@@ -3,9 +3,7 @@ import { userDTO, User, searchCriteria } from "../domain/user";
 import users from "../data/data";
 
 export default class UserExplorerService {
-    constructor() {
-
-    }
+    constructor() { }
 
     public getUsers() {
         if (!users.length) {

@@ -12,21 +12,9 @@ const userExplorerController = new UserExplorerController(userExplorerService);
 
 const router = express.Router({ mergeParams: true })
 
-router.get('/users', (req: any, res: any) => {
-    if (req.query != undefined) {
-        const queryCriteria = req.query;
-        const result = userExplorerController.getUserBySearch(queryCriteria);
-        if (result.success === false) {
-            throw new EntityNotFound(result.message, 404);
-        }
-        return res.status(200).json(result);
-    }
-    const users = userExplorerController.getUsers()
-    return res.status(200).json(users)
+router.get('/users', userExplorerController.getUsers.bind(userExplorerController));
 
-});
-
-router.get('/users/:id', (req: any, res: any) =>{
+router.get('/users/:id', (req: any, res: any) => {
     const { id } = req.params;
     const result = userExplorerController.getUsersById(id);
     if (result.success === false) {
