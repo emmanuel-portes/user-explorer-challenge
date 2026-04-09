@@ -14,14 +14,7 @@ const router = express.Router({ mergeParams: true })
 
 router.get('/users', userExplorerController.getUsers.bind(userExplorerController));
 
-router.get('/users/:id', (req: any, res: any) => {
-    const { id } = req.params;
-    const result = userExplorerController.getUsersById(id);
-    if (result.success === false) {
-        throw new EntityNotFound(result.message, 404);
-    }
-    return res.status(200).json(result.data);
-});
+router.get('/users/:id', userExplorerController.getUsersById.bind(userExplorerController) );
 
 router.post('/users', [
         body("name")
@@ -44,12 +37,6 @@ router.post('/users', [
             .notEmpty().withMessage("City is required")
             .trim()
             .isLength({min: 5, max: 50}).withMessage("City must be between 5 and 50 characters")
-    ], validate, (req: any, res: any) => {
-    const result = userExplorerController.saveUser(req.body)
-    if (!result.success) {
-        throw new UnprocessableEntity(result.message, 422, result.data)
-    }
-    return res.status(201).json(result)
-});
+    ], validate, userExplorerController.saveUser.bind(userExplorerController));
 
 export default router

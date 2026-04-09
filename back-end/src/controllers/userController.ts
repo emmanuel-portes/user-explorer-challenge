@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import UserExplorerService from '../services/userService';
-import { userDTO, searchCriteria } from '../domain/user';
+import { userDTO, searchCriteria, User } from '../domain/user';
 
 import { EntityNotFound } from '../error/appError';
 
@@ -24,8 +24,11 @@ export default class UserExplorerController {
         return res.status(200).json(users);
     }
 
-    public getUsersById(id: string) {
-        return this._userExplorerService.getUsersById(id)
+    public getUsersById(req: Request, res: Response) {
+        const id: string = String(req.params.id);
+        const result = this._userExplorerService.getUsersById(id);
+        if (!result.success) throw new EntityNotFound(result.message, 404);
+        return res.status(200).json(result.data);
     }
 
     public saveUser(user: userDTO) {
