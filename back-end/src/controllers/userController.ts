@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 
 import UserExplorerService from '../services/userService';
-import { userDTO, searchCriteria, User } from '../domain/user';
+import { searchCriteria } from '../domain/user';
 
-import { EntityNotFound } from '../error/appError';
+import { EntityNotFound, UnprocessableEntity } from '../error/appError';
 
 export default class UserExplorerController {
 
@@ -31,7 +31,9 @@ export default class UserExplorerController {
         return res.status(200).json(result.data);
     }
 
-    public saveUser(user: userDTO) {
-        return this._userExplorerService.saveUser(user)
+    public saveUser(req: Request, res: Response) {
+        const result = this._userExplorerService.saveUser(req.body);
+        if (!result.success) throw new UnprocessableEntity(result.message, 422, result.data);
+        return res.status(201).json(result); 
     }
 }

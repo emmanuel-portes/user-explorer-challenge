@@ -5,7 +5,6 @@ import { validate } from '../middleware/validation'
 
 import UserExplorerController from '../controllers/userController'; 
 import UserExplorerService from '../services/userService';
-import { EntityNotFound, UnprocessableEntity } from '../error/appError';
 
 const userExplorerService = new UserExplorerService();
 const userExplorerController = new UserExplorerController(userExplorerService);
